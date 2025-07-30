@@ -75,10 +75,20 @@
         display: none;
       }
       
-       .sub-title{
-        margin-bottom: 12px;
-        font-size: 14px;
-        color: #333;
+       .pill-card{
+        margin-bottom: 16px;
+        font-size: 12px;
+        line-height: 1.4;
+        color: #64748b;
+        background: #f1f5f9;
+        border: 1px solid #e2e8f0;
+        border-radius: 6px;
+        padding: 10px 12px;
+      }
+
+      .pill-card strong{
+        color: #374151;
+        font-weight: 600;
       }
 
       .content {
@@ -420,7 +430,7 @@
     <div class="content">
       <!-- NAMES TAB -->
       <div class="tab-panel active" data-panel="names">
-        <div class="sub-title">Generate by <u>clicking the button</u> below or by <u>selecting a text layer.</u></div>
+        <div class="pill-card">Generate by <strong>clicking the button</strong> below or by <strong>selecting a text layer.</strong></div>
         <div class="form-group">
           <label>Gender</label>
           <div class="radio-group">
@@ -540,7 +550,7 @@
 
       <!-- ADDRESSES TAB -->
       <div class="tab-panel" data-panel="addresses">
-        <div class="sub-title">Generate by <u>clicking the button</u> below or by <u>selecting a text layer.</u></div>
+        <div class="pill-card">Generate by <strong>clicking the button</strong> below or by <strong>selecting a text layer.</strong></div>
         <div class="form-group">
           <label>Province (Optional)</label>
           <select id="addressProvince">
@@ -571,7 +581,7 @@
 
       <!-- DATES TAB -->
       <div class="tab-panel" data-panel="dates">
-        <div class="sub-title">Generate by <u>clicking the button</u> below or by <u>selecting a text layer.</u></div>
+        <div class="pill-card">Generate by <strong>clicking the button</strong> below or by <strong>selecting a text layer.</strong></div>
         <div class="form-group">
           <label>Language</label>
           <div class="radio-group">
