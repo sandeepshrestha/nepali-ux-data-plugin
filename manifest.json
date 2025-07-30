@@ -1,0 +1,14 @@
+{
+  "name": "Nepali Placeholder Kit",
+  "id": "1532318617364479473",
+  "api": "1.0.0",
+  "main": "code.js",
+  "capabilities": [],
+  "enableProposedApi": false,
+  "documentAccess": "dynamic-page",
+  "networkAccess": {
+    "allowedDomains": ["none"]
+  },
+  "editorType": ["figma"],
+  "ui": "ui.html"
+}
