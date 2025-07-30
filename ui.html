@@ -503,7 +503,7 @@
 
         <div class="actions">
           <button onclick="generateName()" id="nameGenerateBtn">
-            Generate
+            Generate <span class="selectedLayerCount">New Data</span>
           </button>
         </div>
 
@@ -533,7 +533,7 @@
 
         <div class="actions">
           <button onclick="generateAddress()" id="addressGenerateBtn">
-            Generate
+            Generate <span class="selectedLayerCount">New Data</span>
           </button>
         </div>
 
@@ -616,7 +616,7 @@
 
         <div class="actions">
           <button onclick="generateNepaliDate()" id="dateGenerateBtn">
-            Generate
+            Generate <span class="selectedLayerCount">New Data</span>
           </button>
         </div>
 
@@ -764,6 +764,7 @@
 
       function updateSelectionInfo(selection) {
         const infoTexts = document.querySelectorAll(".info-text");
+        const selectedLayerCounts = document.querySelectorAll(".selectedLayerCount");
 
         const message =
           selection.count === 0
@@ -775,6 +776,15 @@
         infoTexts.forEach((infoText) => {
           infoText.textContent = message;
         });
+
+         const count_data =
+          selection.count === 0
+            ? "New Data"
+            : `(${selection.count} data)`;
+
+        selectedLayerCounts.forEach((selectedLayerCount) => {
+          selectedLayerCount.textContent = count_data;
+        })
       }
 
       // ========================================================================
