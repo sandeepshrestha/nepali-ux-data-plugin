@@ -59,6 +59,13 @@
         display: none;
       }
 
+      .sub-title{
+        margin-bottom: 12px;
+        font-size: 14px;
+        color: #333;
+        font-weight: bold;
+      }
+
       .content {
         flex: 1;
         padding: 20px;
@@ -398,6 +405,7 @@
     <div class="content">
       <!-- NAMES TAB -->
       <div class="tab-panel active" data-panel="names">
+        <div class="sub-title">Generate by clicking the button below or by selecting a text layer.</div>
         <div class="form-group">
           <label>Gender</label>
           <div class="radio-group">
@@ -503,20 +511,21 @@
 
         <div class="actions">
           <button onclick="generateName()" id="nameGenerateBtn">
-            Generate <span class="selectedLayerCount">New Data</span>
+            <span class="selectedLayerCount">Generate New Data</span>
           </button>
         </div>
 
-        <div class="info-note">
+        <!-- <div class="info-note">
           <span class="info-icon">ℹ️</span>
           <span class="info-text"
             >Select text layers to update, or create new if none selected</span
           >
-        </div>
+        </div> -->
       </div>
 
       <!-- ADDRESSES TAB -->
       <div class="tab-panel" data-panel="addresses">
+        <div class="sub-title">Generate by clicking the button below or by selecting a text layer.</div>
         <div class="form-group">
           <label>Province (Optional)</label>
           <select id="addressProvince">
@@ -533,20 +542,21 @@
 
         <div class="actions">
           <button onclick="generateAddress()" id="addressGenerateBtn">
-            Generate <span class="selectedLayerCount">New Data</span>
+            <span class="selectedLayerCount">Generate New Data</span>
           </button>
         </div>
 
-        <div class="info-note">
+        <!-- <div class="info-note">
           <span class="info-icon">ℹ️</span>
           <span class="info-text"
             >Select text layers to update, or create new if none selected</span
           >
-        </div>
+        </div> -->
       </div>
 
       <!-- DATES TAB -->
       <div class="tab-panel" data-panel="dates">
+        <div class="sub-title">Generate by clicking the button below or by selecting a text layer.</div>
         <div class="form-group">
           <label>Language</label>
           <div class="radio-group">
@@ -616,16 +626,16 @@
 
         <div class="actions">
           <button onclick="generateNepaliDate()" id="dateGenerateBtn">
-            Generate <span class="selectedLayerCount">New Data</span>
+            <span class="selectedLayerCount">Generate New Data</span>
           </button>
         </div>
 
-        <div class="info-note">
+        <!-- <div class="info-note">
           <span class="info-icon">ℹ️</span>
           <span class="info-text"
             >Select text layers to update, or create new if none selected</span
           >
-        </div>
+        </div> -->
       </div>
 
       <!-- CONTACT TAB -->
@@ -777,13 +787,16 @@
           infoText.textContent = message;
         });
 
-         const count_data =
-          selection.count === 0
-            ? "New Data"
-            : `(${selection.count} data)`;
-
         selectedLayerCounts.forEach((selectedLayerCount) => {
-          selectedLayerCount.textContent = count_data;
+          if (selection.count > 0 && selection.hasText) {
+            selectedLayerCount.textContent = `Generate (${selection.count} data)`;
+          }
+          else if (selection.count > 0 && !(selection.hasText)){
+            selectedLayerCount.textContent = `Select a text layer`;
+          }
+          else{
+            selectedLayerCount.textContent = `Generate New Data`;
+          }
         })
       }
 
