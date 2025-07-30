@@ -35,7 +35,7 @@
         background: transparent;
         font-size: 12px;
         font-weight: 500;
-        color: #666;
+        color: #888;
         transition: all 0.2s ease;
         position: relative;
         min-width: 60px;
@@ -44,26 +44,35 @@
       }
 
       .tab:hover {
-        color: #333;
-        background: #f5f5f5;
+        color: #555;
+        background: #f8f8f8;
+        transform: none !important;
+        box-shadow: none !important;
       }
 
       .tab.active {
-        color: #1b1b1b;
+        color: #333;
         font-weight: 700;
-        border-bottom: 2px solid #1b1b1b;
+        border-bottom: 2px solid #5C6082;
         background: transparent;
+        transform: none !important;
+        box-shadow: none !important;
+      }
+
+      /* Override button styles specifically for tabs */
+      .tab {
+        transform: none !important;
+        box-shadow: none !important;
+        width: auto !important;
+      }
+
+      .tab:active {
+        transform: none !important;
+        box-shadow: none !important;
       }
 
       .tab.hidden {
         display: none;
-      }
-
-      .sub-title{
-        margin-bottom: 12px;
-        font-size: 14px;
-        color: #333;
-        font-weight: bold;
       }
 
       .content {
@@ -91,7 +100,7 @@
         margin-bottom: 6px;
         font-weight: 600;
         font-size: 13px;
-        color: #2d3748;
+        color: #555;
         letter-spacing: -0.01em;
       }
 
@@ -109,7 +118,7 @@
       input {
         width: 100%;
         padding: 10px 12px;
-        border: 1.5px solid #e2e8f0;
+        border: 1px solid #e8e8e8;
         border-radius: 0;
         font-size: 13px;
         background: white;
@@ -120,17 +129,17 @@
       select:focus,
       input:focus {
         outline: none;
-        border-color: #1b1b1b;
-        box-shadow: 0 0 0 3px rgba(27, 27, 27, 0.1);
+        border-color: #5C6082;
+        box-shadow: 0 0 0 2px rgba(92, 96, 130, 0.15);
       }
 
       select:hover,
       input:hover {
-        border-color: #cbd5e0;
+        border-color: #d0d0d0;
       }
 
       button {
-        background: #1b1b1b;
+        background: #5C6082;
         color: white;
         border: none;
         padding: 12px 16px;
@@ -140,14 +149,14 @@
         font-weight: 600;
         transition: all 0.2s ease;
         letter-spacing: -0.01em;
-        box-shadow: 0 2px 4px rgba(27, 27, 27, 0.2);
+        box-shadow: 0 2px 4px rgba(92, 96, 130, 0.2);
         width: 100%;
       }
 
       button:hover {
         transform: translateY(-1px);
-        box-shadow: 0 4px 12px rgba(27, 27, 27, 0.3);
-        background: #333;
+        box-shadow: 0 4px 12px rgba(92, 96, 130, 0.25);
+        background: #4A4E6B;
       }
 
       button:active {
@@ -156,15 +165,15 @@
 
       button.secondary {
         background: white;
-        color: #4a5568;
-        border: 1.5px solid #e2e8f0;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        color: #5C6082;
+        border: 1px solid #e8e8e8;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
       }
 
       button.secondary:hover {
-        background: #f7fafc;
-        border-color: #cbd5e0;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        background: #f8f8f8;
+        border-color: #d0d0d0;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
       }
 
       .info-note {
@@ -174,7 +183,7 @@
         padding: 8px 0;
         margin-top: 12px;
         font-size: 11px;
-        color: #666;
+        color: #888;
         opacity: 0.8;
       }
 
@@ -255,29 +264,29 @@
         justify-content: center;
         padding: 10px 12px;
         background: white;
-        border: 2px solid #e2e8f0;
+        border: 1px solid #e8e8e8;
         border-radius: 0;
         text-align: center;
         cursor: pointer;
         transition: all 0.2s ease;
         font-size: 12px;
         font-weight: 500;
-        color: #4a5568;
+        color: #666;
         margin-bottom: 0;
         min-height: 60px;
       }
 
       .radio-card label:hover {
-        border-color: #cbd5e0;
-        background: #f7fafc;
+        border-color: #d0d0d0;
+        background: #f8f8f8;
       }
 
       .radio-card input[type="radio"]:checked + label {
         background: white;
-        border-color: #1b1b1b;
+        border-color: #5C6082;
         border-width: 2px;
-        color: #1b1b1b;
-        box-shadow: 0 2px 8px rgba(27, 27, 27, 0.15);
+        color: #333;
+        box-shadow: 0 2px 8px rgba(92, 96, 130, 0.15);
         position: relative;
       }
 
@@ -288,11 +297,11 @@
         right: 8px;
         font-size: 14px;
         font-weight: bold;
-        color: #1b1b1b;
+        color: #5C6082;
       }
 
       .radio-card input[type="radio"]:focus + label {
-        box-shadow: 0 0 0 3px rgba(27, 27, 27, 0.1);
+        box-shadow: 0 0 0 2px rgba(92, 96, 130, 0.15);
       }
 
       /* Checkbox styling */
@@ -300,7 +309,7 @@
         width: auto !important;
         margin-right: 8px;
         transform: scale(1.2);
-        accent-color: #1b1b1b;
+        accent-color: #5C6082;
       }
 
       .form-group label input[type="checkbox"] {
@@ -369,9 +378,9 @@
         align-items: center;
         padding: 8px 16px;
         background: #fafafa;
-        border-top: 1px solid #e8e8e8;
+        border-top: 1px solid #f0f0f0;
         font-size: 10px;
-        color: #666;
+        color: #888;
         position: relative;
         margin-top: auto;
       }
@@ -405,7 +414,6 @@
     <div class="content">
       <!-- NAMES TAB -->
       <div class="tab-panel active" data-panel="names">
-        <div class="sub-title">Generate by clicking the button below or by selecting a text layer.</div>
         <div class="form-group">
           <label>Gender</label>
           <div class="radio-group">
@@ -511,21 +519,20 @@
 
         <div class="actions">
           <button onclick="generateName()" id="nameGenerateBtn">
-            <span class="selectedLayerCount">Generate New Data</span>
+            Generate
           </button>
         </div>
 
-        <!-- <div class="info-note">
+        <div class="info-note">
           <span class="info-icon">ℹ️</span>
           <span class="info-text"
             >Select text layers to update, or create new if none selected</span
           >
-        </div> -->
+        </div>
       </div>
 
       <!-- ADDRESSES TAB -->
       <div class="tab-panel" data-panel="addresses">
-        <div class="sub-title">Generate by clicking the button below or by selecting a text layer.</div>
         <div class="form-group">
           <label>Province (Optional)</label>
           <select id="addressProvince">
@@ -542,21 +549,20 @@
 
         <div class="actions">
           <button onclick="generateAddress()" id="addressGenerateBtn">
-            <span class="selectedLayerCount">Generate New Data</span>
+            Generate
           </button>
         </div>
 
-        <!-- <div class="info-note">
+        <div class="info-note">
           <span class="info-icon">ℹ️</span>
           <span class="info-text"
             >Select text layers to update, or create new if none selected</span
           >
-        </div> -->
+        </div>
       </div>
 
       <!-- DATES TAB -->
       <div class="tab-panel" data-panel="dates">
-        <div class="sub-title">Generate by clicking the button below or by selecting a text layer.</div>
         <div class="form-group">
           <label>Language</label>
           <div class="radio-group">
@@ -626,16 +632,16 @@
 
         <div class="actions">
           <button onclick="generateNepaliDate()" id="dateGenerateBtn">
-            <span class="selectedLayerCount">Generate New Data</span>
+            Generate
           </button>
         </div>
 
-        <!-- <div class="info-note">
+        <div class="info-note">
           <span class="info-icon">ℹ️</span>
           <span class="info-text"
             >Select text layers to update, or create new if none selected</span
           >
-        </div> -->
+        </div>
       </div>
 
       <!-- CONTACT TAB -->
@@ -774,7 +780,6 @@
 
       function updateSelectionInfo(selection) {
         const infoTexts = document.querySelectorAll(".info-text");
-        const selectedLayerCounts = document.querySelectorAll(".selectedLayerCount");
 
         const message =
           selection.count === 0
@@ -786,18 +791,6 @@
         infoTexts.forEach((infoText) => {
           infoText.textContent = message;
         });
-
-        selectedLayerCounts.forEach((selectedLayerCount) => {
-          if (selection.count > 0 && selection.hasText) {
-            selectedLayerCount.textContent = `Generate (${selection.count} data)`;
-          }
-          else if (selection.count > 0 && !(selection.hasText)){
-            selectedLayerCount.textContent = `Select a text layer`;
-          }
-          else{
-            selectedLayerCount.textContent = `Generate New Data`;
-          }
-        })
       }
 
       // ========================================================================
