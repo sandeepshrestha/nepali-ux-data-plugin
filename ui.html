@@ -1,782 +1,417 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <style>
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
-
-      body {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-          sans-serif;
-        font-size: 13px;
-        background: #fafafa;
-        height: 100vh;
-        display: flex;
-        flex-direction: column;
-        color: #1a1a1a;
-      }
-
-      .tabs {
-        display: flex;
-        background: white;
-        border-bottom: 1px solid #e8e8e8;
-      }
-
-      .tab {
-        flex: 1;
-        padding: 12px 6px;
-        text-align: center;
-        cursor: pointer;
-        border: none;
-        background: transparent;
-        font-size: 12px;
-        font-weight: 500;
-        color: #888;
-        transition: all 0.2s ease;
-        position: relative;
-        min-width: 60px;
-        letter-spacing: -0.01em;
-        border-bottom: 2px solid transparent;
-      }
-
-      .tab:hover {
-        color: #555;
-        background: #f8f8f8;
-        transform: none !important;
-        box-shadow: none !important;
-      }
-
-      .tab.active {
-        color: #333;
-        font-weight: 700;
-        border-bottom: 2px solid #5C6082;
-        background: transparent;
-        transform: none !important;
-        box-shadow: none !important;
-      }
-
-      /* Override button styles specifically for tabs */
-      .tab {
-        transform: none !important;
-        box-shadow: none !important;
-        width: auto !important;
-      }
-
-      .tab:active {
-        transform: none !important;
-        box-shadow: none !important;
-      }
-
-      .tab.hidden {
-        display: none;
-      }
-      
-       .pill-card{
-        margin-bottom: 16px;
-        font-size: 12px;
-        line-height: 1.4;
-        color: #64748b;
-        background: #f1f5f9;
-        border: 1px solid #e2e8f0;
-        border-radius: 6px;
-        padding: 10px 12px;
-      }
-
-      .pill-card strong{
-        color: #374151;
-        font-weight: 600;
-      }
-
-      .content {
-        flex: 1;
-        padding: 20px;
-        overflow-y: auto;
-        background: #fafafa;
-      }
-
-      .tab-panel {
-        display: none;
-        max-width: 400px;
-      }
-
-      .tab-panel.active {
-        display: block;
-      }
-
-      .form-group {
-        margin-bottom: 20px;
-      }
-
-      .form-group label {
-        display: block;
-        margin-bottom: 6px;
-        font-weight: 600;
-        font-size: 13px;
-        color: #555;
-        letter-spacing: -0.01em;
-      }
-
-      .form-row {
-        display: flex;
-        gap: 10px;
-        align-items: center;
-      }
-
-      .form-row > * {
-        flex: 1;
-      }
-
-      select,
-      input {
-        width: 100%;
-        padding: 10px 12px;
-        border: 1px solid #e8e8e8;
-        border-radius: 0;
-        font-size: 13px;
-        background: white;
-        transition: all 0.2s ease;
-        font-family: inherit;
-      }
-
-      select:focus,
-      input:focus {
-        outline: none;
-        border-color: #5C6082;
-        box-shadow: 0 0 0 2px rgba(92, 96, 130, 0.15);
-      }
-
-      select:hover,
-      input:hover {
-        border-color: #d0d0d0;
-      }
-
-      button {
-        background: #5C6082;
-        color: white;
-        border: none;
-        padding: 12px 16px;
-        border-radius: 0;
-        cursor: pointer;
-        font-size: 13px;
-        font-weight: 600;
-        transition: all 0.2s ease;
-        letter-spacing: -0.01em;
-        box-shadow: 0 2px 4px rgba(92, 96, 130, 0.2);
-        width: 100%;
-      }
-
-      button:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 4px 12px rgba(92, 96, 130, 0.25);
-        background: #4A4E6B;
-      }
-
-      button:active {
-        transform: translateY(0);
-      }
-
-      button.secondary {
-        background: white;
-        color: #5C6082;
-        border: 1px solid #e8e8e8;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
-      }
-
-      button.secondary:hover {
-        background: #f8f8f8;
-        border-color: #d0d0d0;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-      }
-
-      .info-note {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        padding: 8px 0;
-        margin-top: 12px;
-        font-size: 11px;
-        color: #888;
-        opacity: 0.8;
-      }
-
-      .info-icon {
-        font-size: 12px;
-        opacity: 0.7;
-      }
-
-      .info-text {
-        font-weight: 400;
-      }
-
-      .actions {
-        display: flex;
-        gap: 10px;
-        margin: 20px 0 0 0;
-      }
-
-      .image-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 10px;
-        margin: 16px 0;
-      }
-
-      .image-item {
-        aspect-ratio: 1;
-        background: white;
-        border: 2px solid #e2e8f0;
-        border-radius: 0;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 11px;
-        font-weight: 500;
-        color: #718096;
-        transition: all 0.2s ease;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-      }
-
-      .image-item:hover {
-        border-color: #1b1b1b;
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(27, 27, 27, 0.15);
-      }
-
-      .image-item.selected {
-        border-color: #1b1b1b;
-        background: #f0f0f0;
-        color: #1b1b1b;
-        box-shadow: 0 4px 12px rgba(27, 27, 27, 0.2);
-      }
-
-      /* Radio Card Styling */
-      .radio-group {
-        display: flex;
-        gap: 6px;
-        flex-wrap: wrap;
-      }
-
-      .radio-card {
-        position: relative;
-        flex: 1;
-        min-width: 100px;
-      }
-
-      .radio-card input[type="radio"] {
-        position: absolute;
-        opacity: 0;
-        width: 0;
-        height: 0;
-      }
-
-      .radio-card label {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        padding: 10px 12px;
-        background: white;
-        border: 1px solid #e8e8e8;
-        border-radius: 0;
-        text-align: center;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        font-size: 12px;
-        font-weight: 500;
-        color: #666;
-        margin-bottom: 0;
-        min-height: 60px;
-      }
-
-      .radio-card label:hover {
-        border-color: #d0d0d0;
-        background: #f8f8f8;
-      }
-
-      .radio-card input[type="radio"]:checked + label {
-        background: white;
-        border-color: #5C6082;
-        border-width: 2px;
-        color: #333;
-        box-shadow: 0 2px 8px rgba(92, 96, 130, 0.15);
-        position: relative;
-      }
-
-      .radio-card input[type="radio"]:checked + label::after {
-        content: "✓";
-        position: absolute;
-        top: 6px;
-        right: 8px;
-        font-size: 14px;
-        font-weight: bold;
-        color: #5C6082;
-      }
-
-      .radio-card input[type="radio"]:focus + label {
-        box-shadow: 0 0 0 2px rgba(92, 96, 130, 0.15);
-      }
-
-      /* Checkbox styling */
-      input[type="checkbox"] {
-        width: auto !important;
-        margin-right: 8px;
-        transform: scale(1.2);
-        accent-color: #5C6082;
-      }
-
-      .form-group label input[type="checkbox"] {
-        margin-bottom: 0;
-      }
-
-      /* Coming Soon Overlay */
-      .coming-soon-overlay {
-        position: relative;
-      }
-
-      .coming-soon-overlay .overlay-content {
-        filter: blur(4px);
-        opacity: 0.3;
-        pointer-events: none;
-      }
-
-      .coming-soon-message {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: white;
-        padding: 24px 32px;
-        border-radius: 0;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-        text-align: center;
-        z-index: 10;
-      }
-
-      .coming-soon-message h3 {
-        font-size: 16px;
-        font-weight: 600;
-        color: #1b1b1b;
-        margin-bottom: 8px;
-      }
-
-      .coming-soon-message p {
-        font-size: 13px;
-        color: #666;
-        margin: 0;
-      }
-
-      /* Scrollbar styling */
-      ::-webkit-scrollbar {
-        width: 6px;
-      }
-
-      ::-webkit-scrollbar-track {
-        background: #f1f1f1;
-      }
-
-      ::-webkit-scrollbar-thumb {
-        background: #c1c1c1;
-        border-radius: 0;
-      }
-
-      ::-webkit-scrollbar-thumb:hover {
-        background: #a8a8a8;
-      }
-
-      /* Footer styling */
-      .footer {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 8px 16px;
-        background: #fafafa;
-        border-top: 1px solid #f0f0f0;
-        font-size: 10px;
-        color: #888;
-        position: relative;
-        margin-top: auto;
-      }
-
-      .footer-version {
-        font-weight: 500;
-      }
-
-      .footer-attribution {
-        display: flex;
-        align-items: center;
-        gap: 4px;
-        font-weight: 500;
-      }
-
-      .heart-icon {
-        font-size: 12px;
-        color: #e53e3e;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="tabs">
-      <button class="tab active" data-tab="names">Names</button>
-      <button class="tab" data-tab="addresses">Addresses</button>
-      <button class="tab" data-tab="dates">Dates</button>
-      <button class="tab hidden" data-tab="contact">Contact</button>
-      <button class="tab" data-tab="images">Images</button>
-    </div>
-
-    <div class="content">
-      <!-- NAMES TAB -->
-      <div class="tab-panel active" data-panel="names">
-        <div class="pill-card">Generate by <strong>clicking the button</strong> below or by <strong>selecting a text layer.</strong></div>
-        <div class="form-group">
-          <label>Gender</label>
-          <div class="radio-group">
-            <div class="radio-card">
-              <input
-                type="radio"
-                id="gender-neutral"
-                name="nameGender"
-                value="neutral"
-                checked
-              />
-              <label for="gender-neutral">Any</label>
-            </div>
-            <div class="radio-card">
-              <input
-                type="radio"
-                id="gender-male"
-                name="nameGender"
-                value="male"
-              />
-              <label for="gender-male">Male</label>
-            </div>
-            <div class="radio-card">
-              <input
-                type="radio"
-                id="gender-female"
-                name="nameGender"
-                value="female"
-              />
-              <label for="gender-female">Female</label>
-            </div>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label>Language</label>
-          <div class="radio-group">
-            <div class="radio-card">
-              <input
-                type="radio"
-                id="language-english"
-                name="nameLanguage"
-                value="english"
-                checked
-              />
-              <label for="language-english"
-                >English<br /><small style="opacity: 0.8"
-                  >Sandeep Shrestha</small
-                ></label
-              >
-            </div>
-            <div class="radio-card">
-              <input
-                type="radio"
-                id="language-nepali"
-                name="nameLanguage"
-                value="nepali"
-              />
-              <label for="language-nepali"
-                >Nepali<br /><small style="opacity: 0.8"
-                  >सन्दीप श्रेष्ठ</small
-                ></label
-              >
-            </div>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label>Name Type</label>
-          <div class="radio-group">
-            <div class="radio-card">
-              <input
-                type="radio"
-                id="name-type-full"
-                name="nameType"
-                value="full"
-                checked
-              />
-              <label for="name-type-full">Full Name</label>
-            </div>
-            <div class="radio-card">
-              <input
-                type="radio"
-                id="name-type-first"
-                name="nameType"
-                value="first"
-              />
-              <label for="name-type-first">First Name Only</label>
-            </div>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label>
-            <input
-              type="checkbox"
-              id="includeMiddleName"
-              style="margin-right: 8px; transform: scale(1.2)"
-            />
-            Include Middle Name
-          </label>
-        </div>
-
-        <div class="actions">
-          <button onclick="generateName()" id="nameGenerateBtn">
-            <span class="selectedLayerCount">Generate New Data</span>
-          </button>
-        </div>
-
-        <!-- <div class="info-note">
-          <span class="info-icon">ℹ️</span>
-          <span class="info-text"
-            >Select text layers to update, or create new if none selected</span
-          >
-        </div> -->
-      </div>
-
-      <!-- ADDRESSES TAB -->
-      <div class="tab-panel" data-panel="addresses">
-        <div class="pill-card">Generate by <strong>clicking the button</strong> below or by <strong>selecting a text layer.</strong></div>
-        <div class="form-group">
-          <label>Province (Optional)</label>
-          <select id="addressProvince">
-            <option value="">Any Province</option>
-            <option value="Bagmati">Bagmati</option>
-            <option value="Gandaki">Gandaki</option>
-            <option value="Koshi">Koshi</option>
-            <option value="Madhesh">Madhesh</option>
-            <option value="Lumbini">Lumbini</option>
-            <option value="Karnali">Karnali</option>
-            <option value="Sudurpashchim">Sudurpashchim</option>
-          </select>
-        </div>
-
-        <div class="actions">
-          <button onclick="generateAddress()" id="addressGenerateBtn">
-            <span class="selectedLayerCount">Generate New Data</span>
-          </button>
-        </div>
-
-        <!-- <div class="info-note">
-          <span class="info-icon">ℹ️</span>
-          <span class="info-text"
-            >Select text layers to update, or create new if none selected</span
-          >
-        </div> -->
-      </div>
-
-      <!-- DATES TAB -->
-      <div class="tab-panel" data-panel="dates">
-        <div class="pill-card">Generate by <strong>clicking the button</strong> below or by <strong>selecting a text layer.</strong></div>
-        <div class="form-group">
-          <label>Language</label>
-          <div class="radio-group">
-            <div class="radio-card">
-              <input
-                type="radio"
-                id="date-lang-english"
-                name="dateLanguage"
-                value="english"
-                checked
-              />
-              <label for="date-lang-english"
-                >English<br /><small style="opacity: 0.8"
-                  >15 Ashar 2078 BS</small
-                ></label
-              >
-            </div>
-            <div class="radio-card">
-              <input
-                type="radio"
-                id="date-lang-nepali"
-                name="dateLanguage"
-                value="nepali"
-              />
-              <label for="date-lang-nepali"
-                >Nepali<br /><small style="opacity: 0.8"
-                  >२०७८ साल असर १५ गते</small
-                ></label
-              >
-            </div>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label>Format</label>
-          <div class="radio-group">
-            <div class="radio-card">
-              <input
-                type="radio"
-                id="date-format-long"
-                name="dateFormat"
-                value="long"
-                checked
-              />
-              <label for="date-format-long">Long <br /><small style="opacity: 0.8"
-                  >15 Ashar 2078 BS</small>
-              </label>
-            </div>
-            <div class="radio-card">
-              <input
-                type="radio"
-                id="date-format-short"
-                name="dateFormat"
-                value="short"
-              />
-              <label for="date-format-short">Short <br /><small style="opacity: 0.8"
-                  >Ashar 15, 2078</small>
-              </label>
-            </div>
-            <div class="radio-card">
-              <input
-                type="radio"
-                id="date-format-numeric"
-                name="dateFormat"
-                value="numeric"
-              />
-              <label for="date-format-numeric">Numeric <br /><small style="opacity: 0.8"
-                  >2078/03/15</small>
-              </label>
-            </div>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label>
-            <input
-              type="checkbox"
-              id="includeTime"
-              style="margin-right: 8px; transform: scale(1.2)"
-            />
-            Include a time
-          </label>
-        </div>
-
-        <div class="actions">
-          <button onclick="generateNepaliDate()" id="dateGenerateBtn">
-            <span class="selectedLayerCount">Generate New Data</span>
-          </button>
-        </div>
-
-        <!-- <div class="info-note">
-          <span class="info-icon">ℹ️</span>
-          <span class="info-text"
-            >Select text layers to update, or create new if none selected</span
-          >
-        </div> -->
-      </div>
-
-      <!-- CONTACT TAB -->
-      <div class="tab-panel" data-panel="contact">
-        <div class="form-group">
-          <label>Phone Type</label>
-          <select id="phoneType">
-            <option value="mobile">Mobile (+977-98XXXXXXXX)</option>
-            <option value="landline">Landline (+977-1-XXXXXXX)</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label>Currency Amount (NPR)</label>
-          <input
-            type="number"
-            id="currencyAmount"
-            placeholder="Leave empty for random"
-            min="1"
-          />
-        </div>
-
-        <div class="form-group">
-          <label>Date Format</label>
-          <select id="dateFormat">
-            <option value="ad">AD (English)</option>
-            <option value="bs">BS (Nepali)</option>
-            <option value="both">Both</option>
-          </select>
-        </div>
-
-        <div class="actions">
-          <button onclick="generateContact()">Generate All</button>
-        </div>
-
-        <div class="info-note">
-          <span class="info-icon">ℹ️</span>
-          <span class="info-text"
-            >Select text layers to update, or create new if none selected</span
-          >
-        </div>
-      </div>
-
-      <!-- IMAGES TAB -->
-      <div class="tab-panel coming-soon-overlay" data-panel="images">
-        <div class="overlay-content">
-          <div class="form-group">
-            <label>Face Type</label>
-            <div class="form-row">
-              <select id="imageGender">
-                <option value="any">Any Gender</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-              </select>
-              <select id="imageAge">
-                <option value="any">Any Age</option>
-                <option value="young">Young (18-30)</option>
-                <option value="middle">Middle (30-50)</option>
-                <option value="senior">Senior (50+)</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label>Style</label>
-            <select id="imageStyle">
-              <option value="photo">Photo-realistic</option>
-              <option value="avatar">Avatar Style</option>
-              <option value="minimal">Minimal</option>
-            </select>
-          </div>
-
-          <div class="image-grid" id="imageGrid">
-            <div class="image-item">Loading...</div>
-            <div class="image-item">Loading...</div>
-            <div class="image-item">Loading...</div>
-          </div>
-
-          <div class="actions">
-            <button onclick="loadImages()">Load Images</button>
-          </div>
-        </div>
-
-        <div class="coming-soon-message">
-          <h3>Coming Soon!</h3>
-          <p>Stay tuned for AI-generated Nepali faces</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="footer">
-      <div class="footer-version">v0.2.0</div>
-      <div class="footer-attribution">
-        Made by Space Chimp with <span class="heart-icon">♥️</span>
-      </div>
-    </div>
-
-    <script>
-      // ========================================================================
+<!doctype html><html><head><meta charset="utf-8"/><style type="text/css">* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 13px;
+  background: #fafafa;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  color: #1a1a1a;
+}
+
+.tabs {
+  display: flex;
+  background: white;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.tab {
+  flex: 1;
+  padding: 12px 6px;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  font-size: 12px;
+  font-weight: 500;
+  color: #888;
+  transition: all 0.2s ease;
+  position: relative;
+  min-width: 60px;
+  letter-spacing: -0.01em;
+  border-bottom: 2px solid transparent;
+}
+
+.tab:hover {
+  color: #555;
+  background: #f8f8f8;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.tab.active {
+  color: #333;
+  font-weight: 700;
+  border-bottom: 2px solid #5c6082;
+  background: transparent;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Override button styles specifically for tabs */
+.tab {
+  transform: none !important;
+  box-shadow: none !important;
+  width: auto !important;
+}
+
+.tab:active {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.tab.hidden {
+  display: none;
+}
+
+.pill-card {
+  margin-bottom: 16px;
+  font-size: 12px;
+  line-height: 1.4;
+  color: #64748b;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 10px 12px;
+}
+
+.pill-card strong {
+  color: #374151;
+  font-weight: 600;
+}
+
+.content {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  background: #fafafa;
+}
+
+.tab-panel {
+  display: none;
+  max-width: 400px;
+}
+
+.tab-panel.active {
+  display: block;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  font-size: 13px;
+  color: #555;
+  letter-spacing: -0.01em;
+}
+
+.form-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.form-row > * {
+  flex: 1;
+}
+
+select,
+input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #e8e8e8;
+  border-radius: 0;
+  font-size: 13px;
+  background: white;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+select:focus,
+input:focus {
+  outline: none;
+  border-color: #5c6082;
+  box-shadow: 0 0 0 2px rgba(92, 96, 130, 0.15);
+}
+
+select:hover,
+input:hover {
+  border-color: #d0d0d0;
+}
+
+button {
+  background: #5c6082;
+  color: white;
+  border: none;
+  padding: 12px 16px;
+  border-radius: 0;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  letter-spacing: -0.01em;
+  box-shadow: 0 2px 4px rgba(92, 96, 130, 0.2);
+  width: 100%;
+}
+
+button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(92, 96, 130, 0.25);
+  background: #4a4e6b;
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+button.secondary {
+  background: white;
+  color: #5c6082;
+  border: 1px solid #e8e8e8;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+
+button.secondary:hover {
+  background: #f8f8f8;
+  border-color: #d0d0d0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.info-note {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 0;
+  margin-top: 12px;
+  font-size: 11px;
+  color: #888;
+  opacity: 0.8;
+}
+
+.info-icon {
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.info-text {
+  font-weight: 400;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  margin: 20px 0 0 0;
+}
+
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin: 16px 0;
+}
+
+.image-item {
+  aspect-ratio: 1;
+  background: white;
+  border: 2px solid #e2e8f0;
+  border-radius: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 500;
+  color: #718096;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.image-item:hover {
+  border-color: #1b1b1b;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(27, 27, 27, 0.15);
+}
+
+.image-item.selected {
+  border-color: #1b1b1b;
+  background: #f0f0f0;
+  color: #1b1b1b;
+  box-shadow: 0 4px 12px rgba(27, 27, 27, 0.2);
+}
+
+/* Radio Card Styling */
+.radio-group {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.radio-card {
+  position: relative;
+  flex: 1;
+  min-width: 100px;
+}
+
+.radio-card input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.radio-card label {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10px 12px;
+  background: white;
+  border: 1px solid #e8e8e8;
+  border-radius: 0;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 12px;
+  font-weight: 500;
+  color: #666;
+  margin-bottom: 0;
+  min-height: 60px;
+}
+
+.radio-card label:hover {
+  border-color: #d0d0d0;
+  background: #f8f8f8;
+}
+
+.radio-card input[type="radio"]:checked + label {
+  background: white;
+  border-color: #5c6082;
+  border-width: 2px;
+  color: #333;
+  box-shadow: 0 2px 8px rgba(92, 96, 130, 0.15);
+  position: relative;
+}
+
+.radio-card input[type="radio"]:checked + label::after {
+  content: "✓";
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #5c6082;
+}
+
+.radio-card input[type="radio"]:focus + label {
+  box-shadow: 0 0 0 2px rgba(92, 96, 130, 0.15);
+}
+
+/* Checkbox styling */
+input[type="checkbox"] {
+  width: auto !important;
+  margin-right: 8px;
+  transform: scale(1.2);
+  accent-color: #5c6082;
+}
+
+.form-group label input[type="checkbox"] {
+  margin-bottom: 0;
+}
+
+/* Coming Soon Overlay */
+.coming-soon-overlay {
+  position: relative;
+}
+
+.coming-soon-overlay .overlay-content {
+  filter: blur(4px);
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.coming-soon-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 24px 32px;
+  border-radius: 0;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  z-index: 10;
+}
+
+.coming-soon-message h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1b1b1b;
+  margin-bottom: 8px;
+}
+
+.coming-soon-message p {
+  font-size: 13px;
+  color: #666;
+  margin: 0;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 0;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Footer styling */
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 16px;
+  background: #fafafa;
+  border-top: 1px solid #f0f0f0;
+  font-size: 10px;
+  color: #888;
+  position: relative;
+  margin-top: auto;
+}
+
+.footer-version {
+  font-weight: 500;
+}
+
+.footer-attribution {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 500;
+}
+
+.heart-icon {
+  font-size: 12px;
+  color: #e53e3e;
+}
+
+</style></head><body><div class="tabs"><button class="tab active" data-tab="names">Names</button> <button class="tab" data-tab="addresses">Addresses</button> <button class="tab" data-tab="dates">Dates</button> <button class="tab hidden" data-tab="contact">Contact</button> <button class="tab" data-tab="images">Images</button></div><div class="content"><div class="tab-panel active" data-panel="names"><div class="pill-card">Generate by <strong>clicking the button</strong> below or by <strong>selecting a text layer.</strong></div><div class="form-group"><label>Gender</label><div class="radio-group"><div class="radio-card"><input type="radio" id="gender-neutral" name="nameGender" value="neutral" checked="checked"/> <label for="gender-neutral">Any</label></div><div class="radio-card"><input type="radio" id="gender-male" name="nameGender" value="male"/> <label for="gender-male">Male</label></div><div class="radio-card"><input type="radio" id="gender-female" name="nameGender" value="female"/> <label for="gender-female">Female</label></div></div></div><div class="form-group"><label>Language</label><div class="radio-group"><div class="radio-card"><input type="radio" id="language-english" name="nameLanguage" value="english" checked="checked"/> <label for="language-english">English<br/><small style="opacity: 0.8">Sandeep Shrestha</small></label></div><div class="radio-card"><input type="radio" id="language-nepali" name="nameLanguage" value="nepali"/> <label for="language-nepali">Nepali<br/><small style="opacity: 0.8">सन्दीप श्रेष्ठ</small></label></div></div></div><div class="form-group"><label>Name Type</label><div class="radio-group"><div class="radio-card"><input type="radio" id="name-type-full" name="nameType" value="full" checked="checked"/> <label for="name-type-full">Full Name</label></div><div class="radio-card"><input type="radio" id="name-type-first" name="nameType" value="first"/> <label for="name-type-first">First Name Only</label></div></div></div><div class="form-group"><label><input type="checkbox" id="includeMiddleName" style="margin-right: 8px; transform: scale(1.2)"/> Include Middle Name</label></div><div class="actions"><button onclick="generateName()" id="nameGenerateBtn"><span class="selectedLayerCount">Generate New Data</span></button></div></div><div class="tab-panel" data-panel="addresses"><div class="pill-card">Generate by <strong>clicking the button</strong> below or by <strong>selecting a text layer.</strong></div><div class="form-group"><label>Province (Optional)</label> <select id="addressProvince"><option value="">Any Province</option><option value="Bagmati">Bagmati</option><option value="Gandaki">Gandaki</option><option value="Koshi">Koshi</option><option value="Madhesh">Madhesh</option><option value="Lumbini">Lumbini</option><option value="Karnali">Karnali</option><option value="Sudurpashchim">Sudurpashchim</option></select></div><div class="actions"><button onclick="generateAddress()" id="addressGenerateBtn"><span class="selectedLayerCount">Generate New Data</span></button></div></div><div class="tab-panel" data-panel="dates"><div class="pill-card">Generate by <strong>clicking the button</strong> below or by <strong>selecting a text layer.</strong></div><div class="form-group"><label>Language</label><div class="radio-group"><div class="radio-card"><input type="radio" id="date-lang-english" name="dateLanguage" value="english" checked="checked"/> <label for="date-lang-english">English<br/><small style="opacity: 0.8">15 Ashar 2078 BS</small></label></div><div class="radio-card"><input type="radio" id="date-lang-nepali" name="dateLanguage" value="nepali"/> <label for="date-lang-nepali">Nepali<br/><small style="opacity: 0.8">२०७८ साल असर १५ गते</small></label></div></div></div><div class="form-group"><label>Format</label><div class="radio-group"><div class="radio-card"><input type="radio" id="date-format-long" name="dateFormat" value="long" checked="checked"/> <label for="date-format-long">Long<br/><small style="opacity: 0.8">15 Ashar 2078 BS</small></label></div><div class="radio-card"><input type="radio" id="date-format-short" name="dateFormat" value="short"/> <label for="date-format-short">Short<br/><small style="opacity: 0.8">Ashar 15, 2078</small></label></div><div class="radio-card"><input type="radio" id="date-format-numeric" name="dateFormat" value="numeric"/> <label for="date-format-numeric">Numeric<br/><small style="opacity: 0.8">2078/03/15</small></label></div></div></div><div class="form-group"><label><input type="checkbox" id="includeTime" style="margin-right: 8px; transform: scale(1.2)"/> Include a time</label></div><div class="actions"><button onclick="generateNepaliDate()" id="dateGenerateBtn"><span class="selectedLayerCount">Generate New Data</span></button></div></div><div class="tab-panel" data-panel="contact"><div class="form-group"><label>Phone Type</label> <select id="phoneType"><option value="mobile">Mobile (+977-98XXXXXXXX)</option><option value="landline">Landline (+977-1-XXXXXXX)</option></select></div><div class="form-group"><label>Currency Amount (NPR)</label> <input type="number" id="currencyAmount" placeholder="Leave empty for random" min="1"/></div><div class="form-group"><label>Date Format</label> <select id="dateFormat"><option value="ad">AD (English)</option><option value="bs">BS (Nepali)</option><option value="both">Both</option></select></div><div class="actions"><button onclick="generateContact()">Generate All</button></div><div class="info-note"><span class="info-icon">ℹ️</span> <span class="info-text">Select text layers to update, or create new if none selected</span></div></div><div class="tab-panel coming-soon-overlay" data-panel="images"><div class="overlay-content"><div class="form-group"><label>Face Type</label><div class="form-row"><select id="imageGender"><option value="any">Any Gender</option><option value="male">Male</option><option value="female">Female</option></select> <select id="imageAge"><option value="any">Any Age</option><option value="young">Young (18-30)</option><option value="middle">Middle (30-50)</option><option value="senior">Senior (50+)</option></select></div></div><div class="form-group"><label>Style</label> <select id="imageStyle"><option value="photo">Photo-realistic</option><option value="avatar">Avatar Style</option><option value="minimal">Minimal</option></select></div><div class="image-grid" id="imageGrid"><div class="image-item">Loading...</div><div class="image-item">Loading...</div><div class="image-item">Loading...</div></div><div class="actions"><button onclick="loadImages()">Load Images</button></div></div><div class="coming-soon-message"><h3>Coming Soon!</h3><p>Stay tuned for AI-generated Nepali faces</p></div></div></div><div class="footer"><div class="footer-version">v0.2.0</div><div class="footer-attribution">Made by Space Chimp with <span class="heart-icon">♥️</span></div></div><script>// ========================================================================
       // TAB MANAGEMENT
       // ========================================================================
 
@@ -816,7 +451,9 @@
 
       function updateSelectionInfo(selection) {
         const infoTexts = document.querySelectorAll(".info-text");
-        const selectedLayerCounts = document.querySelectorAll(".selectedLayerCount");
+        const selectedLayerCounts = document.querySelectorAll(
+          ".selectedLayerCount"
+        );
 
         const message =
           selection.count === 0
@@ -832,14 +469,12 @@
         selectedLayerCounts.forEach((selectedLayerCount) => {
           if (selection.count > 0 && selection.hasText) {
             selectedLayerCount.textContent = `Replace (${selection.count} data)`;
-          }
-          else if (selection.count > 0 && !(selection.hasText)){
+          } else if (selection.count > 0 && !selection.hasText) {
             selectedLayerCount.textContent = `Select a text layer`;
-          }
-          else{
+          } else {
             selectedLayerCount.textContent = `Generate New Data`;
           }
-        })
+        });
       }
 
       // ========================================================================
@@ -894,8 +529,7 @@
         const format = document.querySelector(
           'input[name="dateFormat"]:checked'
         ).value;
-        const includeTime =
-          document.getElementById("includeTime").checked;
+        const includeTime = document.getElementById("includeTime").checked;
         parent.postMessage(
           {
             pluginMessage: {
@@ -998,7 +632,4 @@
       // ========================================================================
 
       // Load initial images
-      setTimeout(loadImages, 1000);
-    </script>
-  </body>
-</html>
+      setTimeout(loadImages, 1000);</script><script defer="defer" src="code.js"></script></body></html>
