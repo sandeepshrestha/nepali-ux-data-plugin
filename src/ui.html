@@ -15,7 +15,10 @@
     <div class="content">
       <!-- NAMES TAB -->
       <div class="tab-panel active" data-panel="names">
-        <div class="pill-card">Generate by <strong>clicking the button</strong> below or by <strong>selecting a text layer.</strong></div>
+        <div class="pill-card">
+          Generate by <strong>clicking the button</strong> below or by
+          <strong>selecting a text layer.</strong>
+        </div>
         <div class="form-group">
           <label>Gender</label>
           <div class="radio-group">
@@ -135,7 +138,10 @@
 
       <!-- ADDRESSES TAB -->
       <div class="tab-panel" data-panel="addresses">
-        <div class="pill-card">Generate by <strong>clicking the button</strong> below or by <strong>selecting a text layer.</strong></div>
+        <div class="pill-card">
+          Generate by <strong>clicking the button</strong> below or by
+          <strong>selecting a text layer.</strong>
+        </div>
         <div class="form-group">
           <label>Province (Optional)</label>
           <select id="addressProvince">
@@ -166,7 +172,10 @@
 
       <!-- DATES TAB -->
       <div class="tab-panel" data-panel="dates">
-        <div class="pill-card">Generate by <strong>clicking the button</strong> below or by <strong>selecting a text layer.</strong></div>
+        <div class="pill-card">
+          Generate by <strong>clicking the button</strong> below or by
+          <strong>selecting a text layer.</strong>
+        </div>
         <div class="form-group">
           <label>Language</label>
           <div class="radio-group">
@@ -211,8 +220,8 @@
                 value="long"
                 checked
               />
-              <label for="date-format-long">Long <br /><small style="opacity: 0.8"
-                  >15 Ashar 2078 BS</small>
+              <label for="date-format-long"
+                >Long <br /><small style="opacity: 0.8">15 Ashar 2078 BS</small>
               </label>
             </div>
             <div class="radio-card">
@@ -222,8 +231,8 @@
                 name="dateFormat"
                 value="short"
               />
-              <label for="date-format-short">Short <br /><small style="opacity: 0.8"
-                  >Ashar 15, 2078</small>
+              <label for="date-format-short"
+                >Short <br /><small style="opacity: 0.8">Ashar 15, 2078</small>
               </label>
             </div>
             <div class="radio-card">
@@ -233,8 +242,8 @@
                 name="dateFormat"
                 value="numeric"
               />
-              <label for="date-format-numeric">Numeric <br /><small style="opacity: 0.8"
-                  >2078/03/15</small>
+              <label for="date-format-numeric"
+                >Numeric <br /><small style="opacity: 0.8">2078/03/15</small>
               </label>
             </div>
           </div>
@@ -401,7 +410,9 @@
 
       function updateSelectionInfo(selection) {
         const infoTexts = document.querySelectorAll(".info-text");
-        const selectedLayerCounts = document.querySelectorAll(".selectedLayerCount");
+        const selectedLayerCounts = document.querySelectorAll(
+          ".selectedLayerCount"
+        );
 
         const message =
           selection.count === 0
@@ -417,14 +428,12 @@
         selectedLayerCounts.forEach((selectedLayerCount) => {
           if (selection.count > 0 && selection.hasText) {
             selectedLayerCount.textContent = `Replace (${selection.count} data)`;
-          }
-          else if (selection.count > 0 && !(selection.hasText)){
+          } else if (selection.count > 0 && !selection.hasText) {
             selectedLayerCount.textContent = `Select a text layer`;
-          }
-          else{
+          } else {
             selectedLayerCount.textContent = `Generate New Data`;
           }
-        })
+        });
       }
 
       // ========================================================================
@@ -479,8 +488,7 @@
         const format = document.querySelector(
           'input[name="dateFormat"]:checked'
         ).value;
-        const includeTime =
-          document.getElementById("includeTime").checked;
+        const includeTime = document.getElementById("includeTime").checked;
         parent.postMessage(
           {
             pluginMessage: {
