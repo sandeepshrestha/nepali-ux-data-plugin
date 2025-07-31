@@ -448,45 +448,57 @@ class NepaliDateGenerator {
     static convertToNepaliNumber(num) {
         return num.toString().split('').map(digit => this.nepaliNumbers[parseInt(digit)]).join('');
     }
-    static generateDate(language, format) {
+    static generateDate(language, format, includeTime) {
         // Generate a random Nepali date (BS)
         const currentYear = new Date().getFullYear();
         const bsYear = currentYear + 56 + Math.floor(Math.random() * 3); // Current BS year ± some variation
         const month = Math.floor(Math.random() * 12);
         const day = Math.floor(Math.random() * 30) + 1;
+
+        //Generate a random time
+        const hours = Math.floor((Math.random() * 12) + 1); // Random hour from 1 to 12
+        const minutes = Math.floor(Math.random() * 60); // Random minute from 0 to 59
+        // const seconds = Math.floor(Math.random() * 60); // Random second from 0 to 59
+
+        // Pad single-digit numbers with a leading zero for formatting
+        // const formattedHours = String(hours).padStart(2, '0');
+        const formattedMinutes = String(minutes).padStart(2, '0');
+        // const formattedSeconds = String(seconds).padStart(2, '0');
+        const amPM = (Math.random() < 0.5 ? "AM" : "PM");
+
         if (language === "nepali") {
+            const nepaliYear = this.convertToNepaliNumber(bsYear);
+            const nepaliMonth = this.convertToNepaliNumber(month + 1);
+            const nepaliDay = this.convertToNepaliNumber(day);
+            const nepaliHours = this.convertToNepaliNumber(hours);
+            const nepaliMinutes = this.convertToNepaliNumber(formattedMinutes);
+            const nepaliAmPM = amPM==="AM" ? "बिहानी" :  "बेलुकी"; 
+
             if (format === "long") {
                 // Format: "२०७८ साल असर १५ गते"
-                const nepaliYear = this.convertToNepaliNumber(bsYear);
-                const nepaliDay = this.convertToNepaliNumber(day);
-                return `${nepaliYear} साल ${this.nepaliMonths[month]} ${nepaliDay} गते`;
+                return `${nepaliYear} साल ${this.nepaliMonths[month]} ${nepaliDay} गते` + ((includeTime) ? (`, ` + (`${nepaliAmPM} `) + (`${nepaliHours}:${nepaliMinutes}`)) : "");
             }
             else if (format === "short") {
-                // Format: "असर १५, २०७८"
-                const nepaliYear = this.convertToNepaliNumber(bsYear);
-                const nepaliDay = this.convertToNepaliNumber(day);
-                return `${this.nepaliMonths[month]} ${nepaliDay}, ${nepaliYear}`;
+                // Format: "असार १५, २०७८"
+                return `${this.nepaliMonths[month]} ${nepaliDay}, ${nepaliYear}` + ((includeTime) ? (`, ` + (`${nepaliAmPM} `) + (`${nepaliHours}:${nepaliMinutes}`)) : "");
             }
             else {
                 // Format: "२०७८/०४/१५"
-                const nepaliYear = this.convertToNepaliNumber(bsYear);
-                const nepaliMonth = this.convertToNepaliNumber(month + 1);
-                const nepaliDay = this.convertToNepaliNumber(day);
-                return `${nepaliYear}/${nepaliMonth.padStart(2, '०')}/${nepaliDay.padStart(2, '०')}`;
+                return `${nepaliYear}/${nepaliMonth.padStart(2, '०')}/${nepaliDay.padStart(2, '०')}` + ((includeTime) ? (`, ` + (`${nepaliAmPM} `) + (`${nepaliHours}:${nepaliMinutes}`)) : "");
             }
         }
         else {
             if (format === "long") {
                 // Format: "15 Ashar 2078 BS"
-                return `${day} ${this.englishMonths[month]} ${bsYear} BS`;
+                return (`${day} ${this.englishMonths[month]} ${bsYear} BS`) + ((includeTime) ? (`, ` + (`${hours}:${formattedMinutes} ${amPM}`)) : "");
             }
             else if (format === "short") {
                 // Format: "Ashar 15, 2078"
-                return `${this.englishMonths[month]} ${day}, ${bsYear}`;
+                return `${this.englishMonths[month]} ${day}, ${bsYear}` + ((includeTime) ? (`, ` + (`${hours}:${formattedMinutes} ${amPM}`)) : "");
             }
             else {
                 // Format: "2078/04/15"
-                return `${bsYear}/${(month + 1).toString().padStart(2, '0')}/${day.toString().padStart(2, '0')}`;
+                return `${bsYear}/${(month + 1).toString().padStart(2, '0')}/${day.toString().padStart(2, '0')}` + ((includeTime) ? (`, ` + (`${hours}:${formattedMinutes} ${amPM}`)) : "");
             }
         }
     }
@@ -634,7 +646,7 @@ figma.ui.onmessage = async (msg) => {
                 else {
                     // Update all selected text layers
                     for (const textNode of textNodes) {
-                        const date = NepaliDateGenerator.generateDate(msg.language, msg.format);
+                        const date = NepaliDateGenerator.generateDate(msg.language, msg.format, msg.includeTime);
                         await figma.loadFontAsync(textNode.fontName);
                         textNode.characters = date;
                     }

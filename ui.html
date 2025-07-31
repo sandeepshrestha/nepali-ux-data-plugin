@@ -655,6 +655,17 @@
           </div>
         </div>
 
+        <div class="form-group">
+          <label>
+            <input
+              type="checkbox"
+              id="includeTime"
+              style="margin-right: 8px; transform: scale(1.2)"
+            />
+            Include a time
+          </label>
+        </div>
+
         <div class="actions">
           <button onclick="generateNepaliDate()" id="dateGenerateBtn">
             <span class="selectedLayerCount">Generate New Data</span>
@@ -883,12 +894,15 @@
         const format = document.querySelector(
           'input[name="dateFormat"]:checked'
         ).value;
+        const includeTime =
+          document.getElementById("includeTime").checked;
         parent.postMessage(
           {
             pluginMessage: {
               type: "generate-nepali-date",
               language,
               format,
+              includeTime,
               insert: true,
             },
           },
