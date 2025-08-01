@@ -31,11 +31,19 @@
     ],
     "env": {
       "browser": true,
-      "es2017": true
+      "es2017": true,
+      "node": true
     },
     "parserOptions": {
       "ecmaVersion": 2017,
       "sourceType": "module"
+    },
+    "globals": {
+      "figma": "readonly",
+      "__html__": "readonly",
+      "__dirname": "readonly",
+      "module": "readonly",
+      "require": "readonly"
     },
     "root": true,
     "rules": {
