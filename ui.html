@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset="utf-8"/><style type="text/css">* {
+<!doctype html><html><head><meta charset="utf-8"/><title>Nepali UX Data Plugin</title><style type="text/css">* {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -451,7 +451,9 @@ input[type="checkbox"] {
 
       function updateSelectionInfo(selection) {
         const infoTexts = document.querySelectorAll(".info-text");
-        const selectedLayerCounts = document.querySelectorAll(".selectedLayerCount");
+        const selectedLayerCounts = document.querySelectorAll(
+          ".selectedLayerCount"
+        );
 
         const message =
           selection.count === 0
@@ -467,14 +469,12 @@ input[type="checkbox"] {
         selectedLayerCounts.forEach((selectedLayerCount) => {
           if (selection.count > 0 && selection.hasText) {
             selectedLayerCount.textContent = `Replace (${selection.count} data)`;
-          }
-          else if (selection.count > 0 && !(selection.hasText)){
+          } else if (selection.count > 0 && !selection.hasText) {
             selectedLayerCount.textContent = `Select a text layer`;
-          }
-          else{
+          } else {
             selectedLayerCount.textContent = `Generate New Data`;
           }
-        })
+        });
       }
 
       // ========================================================================
@@ -529,8 +529,7 @@ input[type="checkbox"] {
         const format = document.querySelector(
           'input[name="dateFormat"]:checked'
         ).value;
-        const includeTime =
-          document.getElementById("includeTime").checked;
+        const includeTime = document.getElementById("includeTime").checked;
         parent.postMessage(
           {
             pluginMessage: {
